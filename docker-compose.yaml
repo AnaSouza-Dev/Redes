@@ -2,8 +2,6 @@ services:
   backend:
     build:
       context: ./backend
-    env_file:
-      - .env
     environment:
       - SERVER_IP=10.50.0.10
     ports:
@@ -17,12 +15,9 @@ services:
     networks:
       app-network:
         ipv4_address: 10.50.0.10
-
   frontend:
     build:
-      context: ./frontend
-    env_file:
-      - .env
+      context: ./frontend    
     environment:
       - VITE_API_BASE=http://backend:8000/api
     ports:
