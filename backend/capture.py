@@ -1,4 +1,4 @@
-"""Live traffic capture that feeds the aggregator."""
+"""Coleta em tempo real de tráfego para processamento agregado"""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class CaptureService:
-    """Capture packets from an interface and feed the aggregator."""
+    """Coletar pacotes da interface e enviar para o agregador"""
 
     def __init__(self, *, aggregator: TrafficAggregator, iface: str) -> None:
         self.aggregator = aggregator

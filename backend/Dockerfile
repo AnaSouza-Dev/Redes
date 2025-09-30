@@ -14,13 +14,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
-# Create FTP user and directory
+# Cria usuário FTP e directorio
 RUN useradd -m -s /bin/bash testuser && \
     echo "testuser:testpass" | chpasswd && \
     mkdir -p /home/testuser && \
     chown testuser:testuser /home/testuser
 
-# Configure vsftpd
+# Configuração vsftpd
 RUN echo "listen=YES\n\
 listen_ipv6=NO\n\
 anonymous_enable=NO\n\

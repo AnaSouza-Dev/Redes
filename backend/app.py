@@ -1,4 +1,4 @@
-"""FastAPI application entry point."""
+"""Ponto de entrada da Aplicação FastAPI"""
 
 from __future__ import annotations
 
@@ -83,7 +83,7 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         request: JsonDataRequest,
         aggregator: TrafficAggregator = Depends(get_aggregator),
     ) -> JsonDataResponse:
-        """Receive and process JSON data sent via FTP."""
+        """Recebe e Processa dados JSON data enviados via FTP."""
         LOGGER.info("📄 JSON DATA RECEIVED: client_id=%s, type=%s, size=%d bytes", 
                    request.client_id, request.data_type, request.file_size)
         

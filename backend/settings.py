@@ -7,7 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    """Runtime configuration loaded from environment variables."""
+    """Configuração Runtime obtida via variáveis de ambiente"""
 
     server_ip: str = "auto"
     iface: str = "any"
@@ -27,7 +27,7 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
-    """Return a cached settings instance."""
+    """Retornar uma instância de configurações em cache"""
 
     return Settings()
 

@@ -1,4 +1,4 @@
-"""In-memory traffic aggregation utilities."""
+"""Utilitários de agregação trafégo de mémoria."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class TrafficAggregator:
-    """Aggregate captured traffic into tumbling windows."""
+    """Agrupamento de trafego capturado em janelas deslizantes"""
 
     def __init__(self, server_ip: str, window_seconds: int, retention_seconds: int) -> None:
         self.server_ip = server_ip
@@ -44,7 +44,7 @@ class TrafficAggregator:
         length: int,
         protocol: str,
     ) -> None:
-        """Add a captured packet to the aggregation buckets."""
+        """Inserir o pacote capturado nos agrupamentos de agregação"""
 
         if length <= 0:
             return
@@ -89,7 +89,7 @@ class TrafficAggregator:
             self._prune(reference_ts=timestamp)
 
     def get_summary(self, *, from_ts: Optional[int] = None, to_ts: Optional[int] = None) -> List[Dict[str, object]]:
-        """Return a flattened view of aggregated bins within the time range."""
+        """Retornar a visualização dos dados agregados no intervalo de tempo"""
 
         now = int(time.time())
         lower = from_ts if from_ts is not None else now - self.retention_seconds
@@ -115,7 +115,7 @@ class TrafficAggregator:
         return payload
 
     def get_drilldown(self, *, ts: int, client_ip: str) -> Optional[Dict[str, object]]:
-        """Return protocol-level details for a specific bin/client."""
+        """Fornecer informações detalhadas por protocolo para um cliente em um intervalo específico"""
 
         with self._lock:
             bucket = self._data.get(ts)

@@ -1,4 +1,4 @@
-"""Pydantic models for API responses."""
+"""Modelos de dados Pydantic para retorno da API"""
 
 from typing import Any, Dict, List, Optional
 
@@ -6,14 +6,14 @@ from pydantic import BaseModel
 
 
 class HealthResponse(BaseModel):
-    """Represents the health endpoint payload."""
+    """Representa a saúde do endpoint payload."""
 
     ok: bool
     now: int
 
 
 class SummaryBin(BaseModel):
-    """Aggregated traffic for a specific client within a time bin."""
+    """Volume de tráfego agregado por cliente em um bin de tempo"""
 
     ts: int
     client_ip: str
@@ -22,13 +22,14 @@ class SummaryBin(BaseModel):
 
 
 class SummaryResponse(BaseModel):
-    """Response model for the traffic summary endpoint."""
+    """Modelo de resposta para o endpoint de resumo de tráfego"""
 
     bins: List[SummaryBin]
 
 
 class DrilldownItem(BaseModel):
-    """Protocol-level aggregation details."""
+    """Detalhes de agregação em nível de protocolo
+    """
 
     protocol: str
     in_bytes: int
@@ -36,7 +37,7 @@ class DrilldownItem(BaseModel):
 
 
 class DrilldownResponse(BaseModel):
-    """Response model for drill-down information."""
+    """Modelo de Resposta para informação drill-down."""
 
     ts: int
     client_ip: str
@@ -44,7 +45,7 @@ class DrilldownResponse(BaseModel):
 
 
 class JsonDataRequest(BaseModel):
-    """Request model for JSON data received via FTP."""
+    """Modelo de requisição para dados JSON recebidos via FTP"""
     
     client_id: str
     timestamp: int
@@ -54,7 +55,7 @@ class JsonDataRequest(BaseModel):
 
 
 class JsonDataResponse(BaseModel):
-    """Response model for JSON data processing."""
+    """Modelo de resposta para o processamento de dados JSON"""
     
     received: bool
     processed_at: int
