@@ -39,7 +39,7 @@ function JsonTransferPanel() {
       margin: "1rem 0"
     }}>
       <h3 style={{ margin: "0 0 1rem 0", color: "#0C4A6E" }}>
-        📄 JSON Data Transfers via FTP
+        📄 Transferência de Arquivo Json via FTP
       </h3>
       
       {jsonTransfers.length === 0 ? (
