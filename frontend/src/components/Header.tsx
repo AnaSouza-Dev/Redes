@@ -54,7 +54,7 @@ function Header() {
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: "1.8rem" }}>Realtime Traffic Dashboard</h1>
+          <h1 style={{ margin: 0, fontSize: "1.8rem" }}>Trafego de Rede em Tempo Real</h1>
           <p style={{ margin: 0, opacity: 0.8 }}>
             Monitor incoming/outgoing traffic for critical services and drill into protocol details.
           </p>
