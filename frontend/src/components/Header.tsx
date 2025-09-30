@@ -56,7 +56,7 @@ function Header() {
         <div>
           <h1 style={{ margin: 0, fontSize: "1.8rem" }}>Trafego de Rede em Tempo Real</h1>
           <p style={{ margin: 0, opacity: 0.8 }}>
-            Monitor incoming/outgoing traffic for critical services and drill into protocol details.
+           Monitora o tráfego de entrada/saída para serviços críticos e analise os detalhes do protocolo.
           </p>
         </div>
         <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
