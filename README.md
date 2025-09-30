@@ -38,8 +38,8 @@ O **Realtime Traffic Dashboard** é uma aplicação web que monitora o tráfego 
 
 ### 1. Clone o Repositório
 ```bash
-git clone <repository-url>
-cd realtime-traffic-dashboard
+git clone https://github.com/AnaSouza-Dev/Redes
+cd Redes
 ```
 
 ### 2. Configuração do Ambiente
@@ -73,18 +73,6 @@ sudo docker-compose logs -f backend
 ### 5. Parar os Serviços
 ```bash
 sudo docker-compose down --volumes --remove-orphans
-```
-
-### 3. Execução com Docker (Recomendado)
-```bash
-# Construir e iniciar todos os serviços
-sudo docker-compose up --build -d
-
-# Verificar status dos containers
-sudo docker-compose ps
-
-# Visualizar logs
-sudo docker-compose logs -f backend
 ```
 
 ## ✨ Funcionalidades
@@ -265,35 +253,6 @@ flowchart LR
 - **Docker Compose** 2.0+
 - **Linux/WSL2** (para captura de pacotes)
 - **Privilégios de root** (para captura de rede)
-
-## 🚀 Instalação e Execução
-
-### 1. Clone o Repositório
-```bash
-git clone <repository-url>
-cd realtime-traffic-dashboard
-```
-
-### 2. Configuração do Ambiente
-```bash
-# Crie o arquivo .env (opcional)
-cat > .env << EOF
-SERVER_IP=10.50.0.10
-IFACE=any
-WINDOW_SECONDS=5
-RETENTION_SECONDS=300
-EOF
-```
-
-### 4. Acesso ao Dashboard
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:8000
-- **FTP Server**: localhost:21 (testuser:testpass)
-
-### 5. Parar os Serviços
-```bash
-sudo docker-compose down --volumes --remove-orphans
-```
 
 ## 🔌 API Endpoints
 
