@@ -69,7 +69,7 @@ function Header() {
               fontWeight: 600,
             }}
           >
-            {health?.ok ? "Capturing" : "Offline"}
+            {health?.ok ? "Capturando" : "Offline"}
           </div>
         </div>
       </div>
