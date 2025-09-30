@@ -1,0 +1,147 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - .env
+    environment:
+      - SERVER_IP=10.50.0.10
+    ports:
+      - "0.0.0.0:8000:8000"
+      - "0.0.0.0:21:21"
+      - "0.0.0.0:30000-30009:30000-30009"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+    networks:
+      app-network:
+        ipv4_address: 10.50.0.10
+
+  frontend:
+    build:
+      context: ./frontend
+    env_file:
+      - .env
+    environment:
+      - VITE_API_BASE=http://backend:8000/api
+    ports:
+      - "0.0.0.0:5173:4173"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      app-network:
+        ipv4_address: 10.50.0.20
+
+  # Servidor HTTP simples - REMOVIDO (backend serve HTTP)
+  # Servidor FTP - REMOVIDO (backend serve FTP)
+
+  # Cliente 1 - Faz requisições ao backend
+  client1:
+    image: curlimages/curl:latest
+    command: >
+      sh -c "
+        while true; do
+          curl -s http://backend:8000/api/health > /dev/null;
+          sleep 5;
+        done
+      "
+    depends_on:
+      - backend
+    networks:
+      app-network:
+        ipv4_address: 10.50.0.101
+
+  # Cliente 2 - Faz requisições ao backend
+  client2:
+    image: curlimages/curl:latest
+    command: >
+      sh -c "
+        while true; do
+          curl -s http://backend:8000/api/summary > /dev/null;
+          sleep 5;
+        done
+      "
+    depends_on:
+      - backend
+    networks:
+      app-network:
+        ipv4_address: 10.50.0.102
+
+  # Cliente 3 - Faz requisições HTTP e FTP para o backend
+  client3:
+    image: curlimages/curl:latest
+    command: >
+      sh -c "
+        while true; do
+          echo 'Client3: Making HTTP requests...';
+          curl -s http://backend:8000/api/health > /dev/null;
+          curl -s http://backend:8000/api/summary > /dev/null;
+          echo 'Client3: Making FTP requests...';
+          curl -s --ftp-pasv ftp://testuser:testpass@backend:21/ > /dev/null;
+          curl -s --ftp-pasv -T /dev/null ftp://testuser:testpass@backend:21/test.txt > /dev/null;
+          sleep 5;
+        done
+      "
+    depends_on:
+      - backend
+    networks:
+      app-network:
+        ipv4_address: 10.50.0.103
+
+  # Cliente 4 - Faz requisições FTP e envia JSON
+  client4:
+    image: curlimages/curl:latest
+    command: >
+      sh -c "
+        while true; do
+          echo 'Client4: Making FTP requests...';
+          curl -s --ftp-pasv ftp://testuser:testpass@backend:21/ > /dev/null;
+          
+          echo 'Client4: Creating and sending JSON data...';
+          JSON_DATA='{\"client_id\":\"client4\",\"timestamp\":'$$(date +%s)',\"data_type\":\"sensor_data\",\"payload\":{\"temperature\":23.5,\"humidity\":65.2,\"pressure\":1013.25,\"location\":\"10.50.0.104\"},\"file_size\":156}';
+          
+          echo \"$$JSON_DATA\" > /tmp/client4_data.json;
+          
+          curl -s --ftp-pasv -T /tmp/client4_data.json ftp://testuser:testpass@backend:21/client4_data.json > /dev/null;
+          
+          curl -s -X POST http://backend:8000/api/json-data \
+            -H 'Content-Type: application/json' \
+            -d \"$$JSON_DATA\" > /dev/null;
+          
+          echo 'Client4: JSON data sent successfully';
+          sleep 5;
+        done
+      "
+    depends_on:
+      - backend
+    networks:
+      app-network:
+        ipv4_address: 10.50.0.104
+
+  # Cliente 5 - Faz requisições ao backend
+  client5:
+    image: curlimages/curl:latest
+    command: >
+      sh -c "
+        while true; do
+          curl -s http://backend:8000/api/health > /dev/null;
+          sleep 5;
+        done
+      "
+    depends_on:
+      - backend
+    networks:
+      app-network:
+        ipv4_address: 10.50.0.105
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.50.0.0/16
+          gateway: 10.50.0.1
+
+
